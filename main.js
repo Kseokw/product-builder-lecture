@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentTheme = localStorage.getItem('theme');
   if (currentTheme === 'dark') {
     body.classList.add('dark-mode');
-    themeToggle.textContent = '☀️'; // Sun icon for dark mode
+    themeToggle.textContent = '🌙'; // Moon icon for dark mode
   } else {
-    themeToggle.textContent = '🌙'; // Moon icon for light mode
+    themeToggle.textContent = '☀️'; // Sun icon for light mode (default)
   }
 
   function generateLotteryNumbers() {
@@ -76,10 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
     body.classList.toggle('dark-mode');
     if (body.classList.contains('dark-mode')) {
       localStorage.setItem('theme', 'dark');
-      themeToggle.textContent = '☀️';
+      themeToggle.textContent = '🌙'; // Moon icon for dark mode
     } else {
       localStorage.setItem('theme', 'light');
-      themeToggle.textContent = '🌙';
+      themeToggle.textContent = '☀️'; // Sun icon for light mode
     }
     // Re-display numbers to apply correct text color if needed
     const currentNumbers = Array.from(lotteryNumbersDiv.querySelectorAll('.number-circle')).map(circle => circle.textContent === '?' ? undefined : parseInt(circle.textContent));
