@@ -4,18 +4,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('theme-toggle');
   const body = document.body;
 
+  // Teachable Machine elements
+  const imageUpload = document.getElementById('image-upload');
+  const imagePreview = document.getElementById('image-preview');
+  const predictButton = document.getElementById('predict-button');
+  const predictionResultsDiv = document.getElementById('prediction-results');
+
+  // Teachable Machine model variables
+  const URL = "https://teachablemachine.withgoogle.com/models/vfB9qcKLR/";
+  let model, webcam, labelContainer, maxPredictions;
+
+  // Event Listeners
   generateButton.addEventListener('click', generateLotteryNumbers);
   themeToggle.addEventListener('click', toggleTheme);
+  imageUpload.addEventListener('change', handleImageUpload);
+  predictButton.addEventListener('click', predictImage);
+
 
   // Initialize theme from localStorage
   const currentTheme = localStorage.getItem('theme');
   if (currentTheme === 'dark') {
     body.classList.add('dark-mode');
-    // Removed themeToggle.textContent for icon
-  } else {
-    // Removed themeToggle.textContent for icon
   }
 
+  // Lottery Number Generator Functions
   function generateLotteryNumbers() {
     const numbers = new Set();
     while (numbers.size < 6) {
@@ -32,24 +44,22 @@ document.addEventListener('DOMContentLoaded', () => {
     numberCircles.forEach((circle, index) => {
       if (numbers[index]) {
         circle.textContent = numbers[index];
-        // Optional: Change color based on number range
         let color;
         if (numbers[index] <= 10) {
-          color = '#fbc400'; // Yellow
+          color = '#fbc400';
         } else if (numbers[index] <= 20) {
-          color = '#69c8f2'; // Blue
+          color = '#69c8f2';
         } else if (numbers[index] <= 30) {
-          color = '#ff7272'; // Red
+          color = '#ff7272';
         } else if (numbers[index] <= 40) {
-          color = '#aaaaaa'; // Gray
+          color = '#aaaaaa';
         } else {
-          color = '#b0d840'; // Green
+          color = '#b0d840';
         }
-        // Apply color dynamically, but respect dark mode if active
         if (body.classList.contains('dark-mode')) {
             circle.style.backgroundColor = color;
             circle.style.borderColor = color;
-            circle.style.color = '#333'; // Ensure number is visible in dark mode
+            circle.style.color = '#333';
         } else {
             circle.style.backgroundColor = color;
             circle.style.borderColor = color;
@@ -58,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       } else {
         circle.textContent = '?';
-        // Reset to default colors
         if (body.classList.contains('dark-mode')) {
             circle.style.backgroundColor = '#555';
             circle.style.borderColor = '#666';
@@ -72,21 +81,87 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Theme Toggle Function
   function toggleTheme() {
     body.classList.toggle('dark-mode');
     if (body.classList.contains('dark-mode')) {
       localStorage.setItem('theme', 'dark');
-      // Removed themeToggle.textContent for icon
     } else {
       localStorage.setItem('theme', 'light');
-      // Removed themeToggle.textContent for icon
     }
-    // Re-display numbers to apply correct text color if needed
     const currentNumbers = Array.from(lotteryNumbersDiv.querySelectorAll('.number-circle')).map(circle => circle.textContent === '?' ? undefined : parseInt(circle.textContent));
-    displayNumbers(currentNumbers.filter(n => n !== undefined)); // Filter out undefined to not try to display '?'
+    displayNumbers(currentNumbers.filter(n => n !== undefined));
   }
 
 
-  // Generate numbers on initial load as well
+  // Teachable Machine Functions
+  async function initTeachableMachine() {
+      const modelURL = URL + "model.json";
+      const metadataURL = URL + "metadata.json";
+
+      model = await tmImage.load(modelURL, metadataURL);
+      maxPredictions = model.getTotalClasses();
+      console.log("Teachable Machine Model Loaded!");
+      // Initial state for results div
+      predictionResultsDiv.innerHTML = '모델 로딩 완료. 이미지를 업로드해주세요.';
+  }
+
+  function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        imagePreview.style.display = 'block';
+        predictButton.disabled = false;
+        predictionResultsDiv.innerHTML = ''; // Clear previous results
+      };
+      reader.readAsDataURL(file);
+    } else {
+      imagePreview.style.display = 'none';
+      imagePreview.src = '#';
+      predictButton.disabled = true;
+      predictionResultsDiv.innerHTML = '';
+    }
+  }
+
+  async function predictImage() {
+      if (!model || !imagePreview.src || imagePreview.style.display === 'none') {
+          predictionResultsDiv.innerHTML = '이미지를 업로드해주세요.';
+          return;
+      }
+      predictionResultsDiv.innerHTML = '분석 중...';
+      const prediction = await model.predict(imagePreview);
+      displayPredictionResults(prediction);
+  }
+
+  function displayPredictionResults(prediction) {
+      predictionResultsDiv.innerHTML = ''; // Clear previous results
+      const sortedPrediction = prediction.sort((a, b) => b.probability - a.probability); // Sort by highest probability
+
+      sortedPrediction.forEach(classPrediction => {
+          const classLabel = classPrediction.className;
+          const probability = (classPrediction.probability * 100).toFixed(2);
+          
+          const resultItem = document.createElement('div');
+          resultItem.classList.add('result-item');
+          
+          const labelSpan = document.createElement('span');
+          labelSpan.classList.add('label');
+          labelSpan.textContent = classLabel;
+          
+          const confidenceSpan = document.createElement('span');
+          confidenceSpan.classList.add('confidence');
+          confidenceSpan.textContent = `${probability}%`;
+          
+          resultItem.appendChild(labelSpan);
+          resultItem.appendChild(confidenceSpan);
+          predictionResultsDiv.appendChild(resultItem);
+      });
+  }
+
+
+  // Initial calls
   generateLotteryNumbers();
+  initTeachableMachine();
 });

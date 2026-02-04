@@ -32,6 +32,12 @@ h2 {
   transition: color 0.3s ease;
 }
 
+p {
+    color: #666;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
 #lottery-numbers {
   display: flex;
   justify-content: center;
@@ -159,6 +165,89 @@ h2 {
   transition: border-color 0.3s ease;
 }
 
+/* Animal Face Test Section Styles */
+#animal-face-test-section {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#animal-face-test-section p {
+    font-size: 1.1em;
+}
+
+#image-upload {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#image-upload:hover {
+    background-color: #e9e9e9;
+}
+
+#image-preview {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    object-fit: contain;
+    background-color: #fff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#animal-face-test-section #predict-button {
+    background-color: #6f42c1; /* Purple for predict button */
+    margin-top: 20px;
+    width: 100%;
+}
+
+#animal-face-test-section #predict-button:hover {
+    background-color: #5936a0;
+}
+
+#prediction-results {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+#prediction-results .result-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+#prediction-results .result-item:last-child {
+    margin-bottom: 0;
+}
+
+#prediction-results .label {
+    text-align: left;
+}
+
+#prediction-results .confidence {
+    text-align: right;
+    color: #007bff;
+}
+
 
 /* Dark Mode Styles */
 body.dark-mode {
@@ -176,6 +265,10 @@ body.dark-mode h1 {
 
 body.dark-mode h2 {
   color: #f1f1f1;
+}
+
+body.dark-mode p {
+    color: #ccc;
 }
 
 body.dark-mode .number-circle {
@@ -235,4 +328,42 @@ body.dark-mode .contact-form .submit-button:hover {
 
 body.dark-mode .section-separator {
   border-top: 1px solid #555; /* Darker color for dark mode */
+}
+
+body.dark-mode #animal-face-test-section {
+    background-color: #333;
+    box-shadow: inset 0 1px 3px rgba(255,255,255,0.1);
+}
+
+body.dark-mode #image-upload {
+    background-color: #444;
+    border-color: #666;
+    color: #f1f1f1;
+}
+
+body.dark-mode #image-upload:hover {
+    background-color: #555;
+}
+
+body.dark-mode #image-preview {
+    border-color: #666;
+    background-color: #444;
+}
+
+body.dark-mode #animal-face-test-section #predict-button {
+    background-color: #8c60da; /* Lighter purple for dark mode */
+}
+
+body.dark-mode #animal-face-test-section #predict-button:hover {
+    background-color: #7a4ed1;
+}
+
+body.dark-mode #prediction-results {
+    border-color: #666;
+    background-color: #444;
+    color: #f1f1f1;
+}
+
+body.dark-mode #prediction-results .confidence {
+    color: #99ccff; /* Lighter blue for dark mode confidence */
 }
