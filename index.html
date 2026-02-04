@@ -9,26 +9,36 @@
 <body>
   <div class="container">
     <button id="theme-toggle" class="theme-toggle"></button>
-    <h1>로또 번호 추첨기</h1>
-    <div id="lottery-numbers">
-      <div class="number-circle">?</div>
-      <div class="number-circle">?</div>
-      <div class="number-circle">?</div>
-      <div class="number-circle">?</div>
-      <div class="number-circle">?</div>
-      <div class="number-circle">?</div>
+    <h1>나의 즐거운 도구 모음</h1>
+
+    <nav id="category-nav">
+      <button class="category-button active" data-target="lottery-section">로또 번호 추첨기</button>
+      <button class="category-button" data-target="animal-test-section">동물상 테스트</button>
+    </nav>
+
+    <div id="lottery-section">
+      <div id="lottery-numbers">
+        <div class="number-circle">?</div>
+        <div class="number-circle">?</div>
+        <div class="number-circle">?</div>
+        <div class="number-circle">?</div>
+        <div class="number-circle">?</div>
+        <div class="number-circle">?</div>
+      </div>
+      <button id="generate-button">번호 생성</button>
     </div>
-    <button id="generate-button">번호 생성</button>
 
     <hr class="section-separator">
 
-    <div id="animal-face-test-section">
-      <h2>동물상 테스트</h2>
-      <p>강아지상인지 고양이상인지 판별해드립니다!</p>
-      <input type="file" id="image-upload" accept="image/*">
-      <img id="image-preview" src="#" alt="이미지 미리보기" style="display:none; max-width: 200px; max-height: 200px; margin: 20px auto;">
-      <button id="predict-button" disabled>분석하기</button>
-      <div id="prediction-results" style="margin-top: 20px;"></div>
+    <div id="animal-test-section" style="display: none;">
+      <div id="animal-face-test-section">
+        <h2>동물상 테스트</h2>
+        <p>강아지상인지 고양이상인지 판별해드립니다!</p>
+        <input type="file" id="image-upload" accept="image/*">
+        <img id="image-preview" src="#" alt="이미지 미리보기" style="display:none; max-width: 200px; max-height: 200px; margin: 20px auto;">
+        <button id="predict-button" disabled>분석하기</button>
+        <div id="prediction-results" style="margin-top: 20px;"></div>
+      </div>
     </div>
 
     <hr class="section-separator">

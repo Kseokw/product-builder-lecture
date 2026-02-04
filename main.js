@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const predictButton = document.getElementById('predict-button');
   const predictionResultsDiv = document.getElementById('prediction-results');
 
+  // Category Navigation elements
+  const categoryNav = document.getElementById('category-nav');
+  const categoryButtons = document.querySelectorAll('.category-button');
+  const lotterySection = document.getElementById('lottery-section');
+  const animalTestSection = document.getElementById('animal-test-section');
+
   // Teachable Machine model variables
   const URL = "https://teachablemachine.withgoogle.com/models/vfB9qcKLR/";
   let model, webcam, labelContainer, maxPredictions;
@@ -20,12 +26,39 @@ document.addEventListener('DOMContentLoaded', () => {
   imageUpload.addEventListener('change', handleImageUpload);
   predictButton.addEventListener('click', predictImage);
 
+  categoryNav.addEventListener('click', (event) => {
+    if (event.target.classList.contains('category-button')) {
+      const targetSectionId = event.target.dataset.target;
+      showSection(targetSectionId);
+    }
+  });
+
 
   // Initialize theme from localStorage
   const currentTheme = localStorage.getItem('theme');
   if (currentTheme === 'dark') {
     body.classList.add('dark-mode');
   }
+
+  // Category Switching Logic
+  function showSection(sectionId) {
+    // Hide all sections
+    lotterySection.style.display = 'none';
+    animalTestSection.style.display = 'none';
+
+    // Remove active class from all buttons
+    categoryButtons.forEach(button => button.classList.remove('active'));
+
+    // Show the target section and set active button
+    if (sectionId === 'lottery-section') {
+      lotterySection.style.display = 'block';
+      document.querySelector('.category-button[data-target="lottery-section"]').classList.add('active');
+    } else if (sectionId === 'animal-test-section') {
+      animalTestSection.style.display = 'block';
+      document.querySelector('.category-button[data-target="animal-test-section"]').classList.add('active');
+    }
+  }
+
 
   // Lottery Number Generator Functions
   function generateLotteryNumbers() {
@@ -102,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
       model = await tmImage.load(modelURL, metadataURL);
       maxPredictions = model.getTotalClasses();
       console.log("Teachable Machine Model Loaded!");
-      // Initial state for results div
       predictionResultsDiv.innerHTML = '모델 로딩 완료. 이미지를 업로드해주세요.';
   }
 
@@ -114,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         imagePreview.src = e.target.result;
         imagePreview.style.display = 'block';
         predictButton.disabled = false;
-        predictionResultsDiv.innerHTML = ''; // Clear previous results
+        predictionResultsDiv.innerHTML = '';
       };
       reader.readAsDataURL(file);
     } else {
@@ -136,8 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function displayPredictionResults(prediction) {
-      predictionResultsDiv.innerHTML = ''; // Clear previous results
-      const sortedPrediction = prediction.sort((a, b) => b.probability - a.probability); // Sort by highest probability
+      predictionResultsDiv.innerHTML = '';
+      const sortedPrediction = prediction.sort((a, b) => b.probability - a.probability);
 
       sortedPrediction.forEach(classPrediction => {
           const classLabel = classPrediction.className;
@@ -164,4 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial calls
   generateLotteryNumbers();
   initTeachableMachine();
+  // Show lottery section by default
+  showSection('lottery-section');
 });
