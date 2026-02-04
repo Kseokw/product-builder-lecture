@@ -1,6 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   display: flex;
+  flex-direction: column; /* Changed to column to push footer to bottom */
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -17,6 +18,8 @@ body {
   text-align: center;
   position: relative; /* For theme toggle button positioning */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  flex-grow: 1; /* Allow container to grow and push footer down */
+  margin-bottom: 20px; /* Space between container and footer */
 }
 
 h1 {
@@ -281,6 +284,23 @@ p {
     color: #007bff;
 }
 
+/* Footer Styles */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    background-color: #f0f0f0; /* Light gray background */
+    color: #555;
+    margin-top: 30px; /* Space above footer */
+    border-top: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
 
 /* Dark Mode Styles */
 body.dark-mode {
@@ -420,4 +440,10 @@ body.dark-mode #prediction-results {
 
 body.dark-mode #prediction-results .confidence {
     color: #99ccff;
+}
+
+body.dark-mode footer {
+    background-color: #333;
+    color: #ccc;
+    border-top: 1px solid #444;
 }

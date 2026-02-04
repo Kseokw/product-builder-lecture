@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>로또 번호 추첨기</title>
+  <title>재미있는 도구 모음: 로또 번호 생성기 & 동물상 테스트</title>
+  <meta name="description" content="재미로 즐기는 로또 번호 생성기와 인공지능 동물상 테스트 등 유용한 도구를 제공하는 웹사이트입니다.">
   <link href='/style.css' rel='stylesheet'>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8781966980843561"
      crossorigin="anonymous"></script>
@@ -12,6 +13,7 @@
   <div class="container">
     <button id="theme-toggle" class="theme-toggle"></button>
     <h1>나의 즐거운 도구 모음</h1>
+    <p>일상의 소소한 재미와 편리함을 더해주는 도구들을 만나보세요. 로또 번호 생성부터 인공지능 동물상 테스트까지, 다양한 기능들을 제공합니다.</p>
 
     <nav id="category-nav">
       <button class="category-button active" data-target="lottery-section">로또 번호 추첨기</button>
@@ -19,6 +21,8 @@
     </nav>
 
     <div id="lottery-section">
+      <h2>로또 번호 추첨기</h2>
+      <p>매주 로또를 구매하시나요? 어떤 번호를 골라야 할지 고민될 때, 저희 로또 번호 추첨기가 행운의 번호 6개를 자동으로 생성해 드립니다. '번호 생성' 버튼을 눌러 당신의 행운을 시험해보세요!</p>
       <div id="lottery-numbers">
         <div class="number-circle">?</div>
         <div class="number-circle">?</div>
@@ -35,7 +39,7 @@
     <div id="animal-test-section" style="display: none;">
       <div id="animal-face-test-section">
         <h2>동물상 테스트</h2>
-        <p>강아지상인지 고양이상인지 판별해드립니다!</p>
+        <p>최신 인공지능 기술을 활용하여 당신의 얼굴이 강아지상에 가까운지, 고양이상에 가까운지 분석해 드립니다. 아래에서 이미지를 업로드하고 '분석하기' 버튼을 눌러 결과를 확인해보세요. 본 테스트는 재미를 위해 제작되었으므로 결과는 참고용으로만 즐겨주세요!</p>
         <input type="file" id="image-upload" accept="image/*">
         <img id="image-preview" src="#" alt="이미지 미리보기" style="display:none; max-width: 200px; max-height: 200px; margin: 20px auto;">
         <button id="predict-button" disabled>분석하기</button>
@@ -87,5 +91,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
   <script defer type="text/javascript" src="/main.js"></script>
+  <footer>
+    <p>&copy; 2026 나의 즐거운 도구 모음. 모든 권리 보유.</p>
+  </footer>
 </body>
 </html>
+
