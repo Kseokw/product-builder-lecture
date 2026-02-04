@@ -68,17 +68,18 @@ h1 {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: none;
-  border: none;
+  background-color: #ffffff; /* White background for light mode */
+  border: 1px solid #ccc;
   font-size: 24px;
   cursor: pointer;
   padding: 5px;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  color: #333; /* Dark icon for light background */
 }
 
 .theme-toggle:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #e0e0e0;
 }
 
 /* Dark Mode Styles */
@@ -110,9 +111,11 @@ body.dark-mode #generate-button:hover {
 }
 
 body.dark-mode .theme-toggle {
-  color: #f1f1f1; /* Ensure moon icon is visible */
+  background-color: #333333; /* Black background for dark mode */
+  color: #f1f1f1; /* Light icon for dark background */
+  border-color: #555;
 }
 
 body.dark-mode .theme-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #444444;
 }
